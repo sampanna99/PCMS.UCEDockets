@@ -1,0 +1,1043 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.nycourts.gov/xml/ucms/criminaldictionaries"
+    xmlns="http://www.nycourts.gov/xml/ucms/criminaldictionaries" vc:minVersion="1.1"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+    <xs:simpleType name="String32Max">
+        <xs:annotation>
+            <xs:documentation>This is a string that cannot exceed 32 characters in length.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="32"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String64Max">
+        <xs:annotation>
+            <xs:documentation>This is a string that cannot exceed 64 characters in
+                length.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="64"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType final="restriction" name="String255Max">
+        <xs:annotation>
+            <xs:documentation>This is a string that cannot exceed 255 characters in
+                length.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="255"/>
+            <xs:minLength value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String1024Max">
+        <xs:annotation>
+            <xs:documentation>This is a string that cannot exceed 1024 characters in
+                length.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="1024"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String4000Max">
+        <xs:annotation>
+            <xs:documentation>This is a string that cannot exceed 4000 characters in
+                length.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="4000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="FullName">
+        <xs:annotation>
+            <xs:documentation>This type can be used whenever a name is needed, whether person or organization. The fully
+                formatted name is available, as well as each of the constituent parts of the
+                name.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Prefix" type="String255Max" minOccurs="0"/>
+            <xs:element name="First" type="String255Max" minOccurs="0"/>
+            <xs:element name="Middle" type="String255Max" minOccurs="0"/>
+            <xs:element name="Last" type="String255Max" minOccurs="1"/>
+            <xs:element name="Suffix" type="String255Max" minOccurs="0"/>
+            <xs:element name="NameFirstLast" type="String1024Max">
+                <xs:annotation>
+                    <xs:documentation>If a person, this is the person's fully formatted name with the prefix first, for example, "Hon. John Smith". If an organization, the name of the organization.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NameLastFirst" type="String1024Max" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>If a person, this is the person's fully formatted name with the last name first, for example, "Smith, Hon. John". If an organization, the name of the organization.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Address">
+        <xs:annotation>
+            <xs:documentation>This represents a physical address of an entity such as a residence or
+                organization.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" name="Street1" type="String255Max">
+                <xs:annotation>
+                    <xs:documentation>This is the street1 portion of the address.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="Street2" type="String255Max">
+                <xs:annotation>
+                    <xs:documentation>This is the street2 portion of the address, if
+                        any.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="City" type="String255Max">
+                <xs:annotation>
+                    <xs:documentation>This is the city portion of the address.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="Zip" type="String64Max">
+                <xs:annotation>
+                    <xs:documentation>This is the zip or postal code portion of the address, if
+                        available.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="Room" type="String64Max"/>
+            <xs:element minOccurs="0" name="Floor" type="String64Max"/>
+            <xs:element minOccurs="0" name="Building" type="String255Max"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CriminalDictionaries">
+        <xs:annotation>
+            <xs:documentation>This is the root element for the UCMS Criminal Dictionaries, which contains all of the dictionary values.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ACDConditionTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is a list of possible conditions on an adjournment in contemplation of dismissal (ACD) charge outcome.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ACDConditionType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of of possible conditions on an adjournment in contemplation of dismissal (ACD) charge outcome.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="AddressTypes" maxOccurs="unbounded" minOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible address types of an address.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="AddressType" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible address types for an address.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="AdvancingReasons" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible reasons why a sentence was advanced.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="AdvancingReason" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the possible reasons why a sentence was advanced.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="AppearanceTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible appearance types for appearances.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="AppearanceType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible appearance types for an appearance.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="ArrestingAgencies" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible arresting agencies for charges.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="ArrestingAgency" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible arresting agency for a charge.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="BailActivityTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible actions that can be taken for bail on a docket.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="BailActivityType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one action that can occurr for bail on a docket.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="BailPostedSuretyTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This gives the possible types of bail posted sureties, which are:
+
+Not Set - The court staff did not set the type of surety.
+Unknown - The court staff did not know who is responsible for the bail payments.
+Individual - A person who is not the defendant is responsible for bail.
+Corporation - A corporation is responsible for the bail.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="BailPostedSuretyType"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This gives one of the possible posted bail surety values.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="BailStatuses" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is a list of possible bail statuses for a docket.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="BailStatus" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one possible value for a bail status.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="CaseTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible case types for dockets.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="CaseType" type="String255Max"
+                                minOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible case types for a docket.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="ChargeOutcomeTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible outcome types for a charge.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="ChargeOutcomeType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the possible outcome types.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="DischargeConditionTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible discharge condition types.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="DischargeConditionType"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible condition types.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="District">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="County" maxOccurs="unbounded" minOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation>This is the list of all counties included in the extract. Each county may contain a local or superior criminal court.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Court" maxOccurs="unbounded" minOccurs="0">
+                                            <xs:annotation>
+                                                <xs:documentation>This represents a specific local or superior criminal court.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="IsLocalCriminal"
+                                                  type="xs:boolean">
+                                                  <xs:annotation>
+                                                  <xs:documentation>If true, this court is a local criminal court. Otherwise, it is a superior criminal court.</xs:documentation>
+                                                  </xs:annotation>
+                                                  </xs:element>
+                                                  <xs:element maxOccurs="unbounded"
+                                                  name="CourtLocation">
+                                                  <xs:annotation>
+                                                  <xs:documentation>Each court has at least one location, and may have more than one. A location is a named address where the court operates.</xs:documentation>
+                                                  </xs:annotation>
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="CourtLocationName"
+                                                  type="String255Max"/>
+                                                  <xs:element name="CourtLocationAddress"
+                                                  type="Address"/>
+                                                  <xs:element maxOccurs="unbounded" name="CourtRoom">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This is a room in a court location.</xs:documentation>
+                                                  </xs:annotation>
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="Name" type="String255Max">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This is the name the court has given the room.</xs:documentation>
+                                                  </xs:annotation>
+                                                  </xs:element>
+                                                  <xs:element minOccurs="0" name="CourtRoomFloor"
+                                                  type="String255Max">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This is the floor on which this room resides, if specified.
+</xs:documentation>
+                                                  </xs:annotation>
+                                                  </xs:element>
+                                                  <xs:element minOccurs="0" name="RoomName"
+                                                  type="String255Max">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This is an additional name associated with this room, if any.</xs:documentation>
+                                                  </xs:annotation>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  <xs:attribute name="CourtRoomID"
+                                                  type="String32Max">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This identifier uniquely identifies each court room, allowing a specific one to be referenced by the identifier. This identifier is permanent, which means that the same court room retains the same identifier each time it appears in an extract. This identifier is of the form "CourtRoom-Sequence". It should be noted that: 
+o CourtRoom is literally "CourtRoom". 
+o Sequence is a 12 digit number that starts with 1 and is incremented by 1. The number is 0 padded which means that any digits that are unused are 0 digits, such as "000000000013". An example identifier is "CourtRoom-000000000013".</xs:documentation>
+                                                  </xs:annotation>
+                                                  </xs:attribute>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  <xs:attribute name="CourtLocationID"
+                                                  type="String32Max">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This identifier uniquely identifies each court location, allowing a specific one to be referenced by the identifier. This identifier is permanent, which means that the same court location retains the same identifier each time it appears in an extract. This identifier is of the form "CourtLocation-Sequence". It should be noted that: 
+o CourtLocation is literally "CourtLocation". 
+o Sequence is a 12 digit number that starts with 1 and is incremented by 1. The number is 0 padded which means that any digits that are unused are 0 digits, such as "000000000013". An example identifier is "CourtLocation-000000000013".</xs:documentation>
+                                                  </xs:annotation>
+                                                  </xs:attribute>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element maxOccurs="unbounded" minOccurs="0"
+                                                  name="Part">
+                                                  <xs:annotation>
+                                                  <xs:documentation>A part is primarily a collection of appearances. Example of part name are room number, judge name, or any other name that is meaningful to the court.  </xs:documentation>
+                                                  </xs:annotation>
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="PartName" type="String255Max">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This is the name of the part in that county. The name is unique so can be used as the permanent identifier for the part.</xs:documentation>
+                                                  </xs:annotation>
+                                                  </xs:element>
+                                                  <xs:element name="CourtRoomReference"
+                                                  type="String32Max" minOccurs="0">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This is a reference to the court room which is tied to this part.</xs:documentation>
+                                                  </xs:annotation>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  <xs:attribute form="unqualified" name="PartID"
+                                                  type="String32Max" use="required">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This identifier uniquely identifies each part, allowing a specific one to be referenced by the identifier. This identifier is permanent, which means that the same part retains the same identifier each time it appears in an extract. This identifier is of the form "Part-Sequence". It should be noted that: 
+o Part is literally "Part". 
+o Sequence is a 12 digit number that starts with 1 and is incremented by 1. The number is 0 padded which means that any digits that are unused are 0 digits, such as "000000000013". An example identifier is "Part-000000000013".</xs:documentation>
+                                                  </xs:annotation>
+                                                  </xs:attribute>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element maxOccurs="unbounded"
+                                                  name="AppearancePurpose">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This is a dictionary of possible appearance purposes for the given court. Every court selects their own values for this list; the lists between different courts may be identical or similar.</xs:documentation>
+                                                  </xs:annotation>
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="Purpose" type="String255Max">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This is the name of the purpose. The name is unique within a court so can be used as a permanent identifier for the purpose.</xs:documentation>
+                                                  </xs:annotation>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                                <xs:attribute form="unqualified" name="CourtID"
+                                                  type="String32Max" use="required">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This identifier uniquely identifies each court, allowing a specific one to be referenced by the identifier. This identifier is permanent, which means that the same court retains the same identifier each time it appears in an extract. This identifier is of the form "Court-Sequence". It should be noted that: 
+o Court is literally "Court". 
+o Sequence is a 12 digit number that starts with 1 and is incremented by 1. The number is 0 padded which means that any digits that are unused are 0 digits, such as "000000000013". An example identifier is "Court-000000000013".</xs:documentation>
+                                                  </xs:annotation>
+                                                </xs:attribute>
+                                                <xs:attribute name="Name" type="String32Max"
+                                                  use="required">
+                                                  <xs:annotation>
+                                                  <xs:documentation>This is the full name of the Court.</xs:documentation>
+                                                  </xs:annotation>
+                                                </xs:attribute>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute form="unqualified" name="CountyID"
+                                        type="String32Max" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation>This identifier uniquely identifies each county, allowing a specific one to be referenced by the identifier. This identifier is permanent, which means that the same county retains the same identifier each time it appears in an extract. This identifier is of the form "County-Sequence". It should be noted that: 
+o County is literally "County". 
+o Sequence is a 12 digit number that starts with 1 and is incremented by 1. The number is 0 padded which means that any digits that are unused are 0 digits, such as "000000000013". An example identifier is "County-000000000013".</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="Name" type="String32Max" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation>This is the full name of the county.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="CountyCode" type="String32Max">
+                                        <xs:annotation>
+                                            <xs:documentation>This is the standardized code assigned to each of the 62 counties.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="DistrictID" type="String32Max">
+                            <xs:annotation>
+                                <xs:documentation>This identifier uniquely identifies each district, allowing a specific one to be referenced by the identifier. This identifier is permanent, which means that the same district retains the same identifier each time it appears in an extract. This identifier is of the form "District-XYZ", where XYZ is the district number. The district number is 0 padded so that any districts with less than 3 digits has a 0 in front.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="Name" type="String32Max" use="required">
+                            <xs:annotation>
+                                <xs:documentation>This is the district number.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="DocketDispositionCategories" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible categories for why a docket was disposed.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="1" name="DocketDispositionCategory"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the categories for why a docket was disposed.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="DocketDispositionReasons" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible disposition reasons for a docket.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="1" name="DocketDispositionReason"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the reasons why a docket was disposed.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="DocketDispositionCategory" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is the category associated with this disposition reason.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="DrugTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible drug types for charges.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="DrugType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible drug type for a charge.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="DrunkDriverProgramRequirements" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is a list of possible requirements for a defendant with a drunk driving sentence.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="DrunkDriverProgramRequirement" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is a list of possible requirements for a defendant with a drunk driving sentence.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="DurationUnits" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the possible units of duration, such as year, month, days, and hours.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="DurationUnit" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one unit of duration, such as year, month, days, and hours.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Ethnicities" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible ethnicities for an individual.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="Ethnicity" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible ethnicity values.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="EyeColors" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible eye colors for an individual.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="EyeColor" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible eye color values.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="FederalGunProhibitors" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is true, false, or unknown.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="FederalGunProhibitor">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the values for federal gun prohibitors.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="FelonyOffenderStatusTypes">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of the possible felony offender statuses for conviction charge outcomes.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="FelonyOffenderStatusType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the possible felony offender statuses for conviction charge outcomes.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Genders" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible genders for an individual.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="Gender" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible gender values.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="HairColors" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible hair colors for an individual.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="HairColor" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible hair color values.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="ImprisonmentConditionTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible imprisonment condition types.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="ImprisonmentConditionType"
+                                nillable="false" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the condition types.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Judge" maxOccurs="unbounded" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>This represents a judge.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="JudgeName" type="FullName">
+                                <xs:annotation>
+                                    <xs:documentation>This is the full name of the judge
+                                                    as recorded in the UCMS-SC
+                                                    system.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="JudgeType" type="String64Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is the type of judge, such as
+                                                    "County/Family Judge", "Village Justice", and so
+                                                    on.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="JudgeCourt">
+                                <xs:annotation>
+                                    <xs:documentation>This represents the list of courts associated with a judge if any.</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="1" minOccurs="1"
+                                            name="CourtReference" type="String64Max">
+                                            <xs:annotation>
+                                                <xs:documentation>This is a reference to the court which is tied to this judge.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute form="unqualified" name="JudgeID" type="String32Max"
+                            use="required">
+                            <xs:annotation>
+                                <xs:documentation>This identifier uniquely identifies each judge, allowing a specific one to be referenced by the identifier. This identifier is permanent, which means that the same judge retains the same identifier each time it appears in an extract. This identifier is of the form "Judge-Sequence". It should be noted that: 
+o Judge is literally "Judge". 
+o Sequence is a 12 digit number that starts with 1 and is incremented by 1. The number is 0 padded which means that any digits that are unused are 0 digits, such as "000000000013". An example identifier is "Judge-000000000013".</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Languages" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible languages for an individual.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="Language" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible language values.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="LicenseActionTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible types of license actions, such as suspension, revocation, and no action.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="LicenseActionType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the license actions, such as suspension, revocation, and no action.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="MotionTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible motion types for motions.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="MotionType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible motion types for a motion.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Nations" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible nations.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="Nation" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible nations.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="NCICCodes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible National Crime Information Center (NCIC) equivalent of the Department of Criminal Justice Services (DCJS) charge code.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="NCICCode" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible NCIC code for a charge.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="NonMonetaryConditionTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible bail conditions put on a defendant when they are released with non monetary conditions.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="NonMonetaryConditionType">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the possible bail conditions put on a defendant when they are released with non monetary conditions.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="OrderOfProtectionFormTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This contains a list of the types of forms used for orders of protection.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="OrderOfProtectionFormType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the types of forms used for orders of protection.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="OutcomeTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible outcome types for dockets.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="OutcomeType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible docket outcome types for a docket.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="ProbationConditionTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible probation condition types.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="ProbationConditionType" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible condition types.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Races" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible races for an individual.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="Race" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible race values.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Representations" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible types of representation.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="Representation" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible types of representation.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="RoleTypes">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible role type for an individual.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="RoleType" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible role type values.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="ScheduledReasons" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible reasons for why an appearance has been scheduled.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="ScheduledReason" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible reasons why an appearance was scheduled.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="SealTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible seal types for dockets and charges.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="SealType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible seal types for a docket or charge.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="SentenceItemTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible sentence item types for sentence items on sentences.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="SentenceItemType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the possible sentence item types for sentence items on sentences.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="SentenceOutcomes" maxOccurs="unbounded" minOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible sentence outcomes for sentences.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="SentenceOutcome" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the possible sentenc outcomes for a sentence.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="SurchargeFeeTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of types of surcharges or fees.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="SurchargeFeeType" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the types of surcharges or fees.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="TrafficVehicleTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible types of vehicles, such as Passenger, Bus, Motorcycle, and the like.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="TrafficVehicleType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the vehicle types.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="TransferReasons" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible reasons why a docket was transferred to another court.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" minOccurs="1" name="TransferReason"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the reasons why a docket was transferred to another court.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="TreatmentProgramTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible types of treatment program types.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="TreatmentProgramType"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible types of treatment programs.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="USStates" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible U.S. states.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="USState" nillable="false"
+                                type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible state values.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="VirtualLoginTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of virtual login types that can be used at the time of an appearance.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="VirtualLoginType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of possibles virtual login types.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="WarrantReasons" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of reasons why a warrant was given.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="WarrantReason" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This is one of the reasons a warrant can be given.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="WeaponTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible weapon types for charges.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="WeaponType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible weapon type for a charge.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="WeightSeverityTypes" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>This is the list of possible weight severities for charges.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="WeightSeverityType" type="String255Max">
+                                <xs:annotation>
+                                    <xs:documentation>This represents one of the possible weight severities for a charge.</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
