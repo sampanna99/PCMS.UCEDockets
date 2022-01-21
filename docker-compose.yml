@@ -15,8 +15,8 @@ services:
       - source: ucedocket-config
         target: /app/config
     build:
-      context: .
-      dockerfile: ./Dockerfile
+      context: src/
+      dockerfile: Dockerfile
     ports:
       - 5023:5023
     depends_on:
