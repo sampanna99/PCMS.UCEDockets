@@ -1,12 +1,43 @@
-# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
-
-version: '3.4'
+version: '3.9'
 
 services:
   ucedockets:
-    image: ucedockets
+    image: pcms.ucedockets
+    environment:
+      # there is a password here that should be changed, see duplicated information below SA_PASSWORD
+      ConnectionStrings__DefaultConnection: Server=db; Database=ucedockets; User ID=sa; Password=ChangeMe!N0W;
+      UCEDockets__LocalPath: /sync
+    volumes:
+       - dbdata:/var/opt/mssql/data
+    configs:
+      - source: ucedocket-config
+        target: /app/config/config.json
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
       - 5023:5023
+    depends_on:
+      - db
+    networks:
+       - overlay      
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      # there is a password here that should be changed, see duplicated information above ConnectionStrings__DefaultConnection
+      SA_PASSWORD: "ChangeMe!N0W"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - dbdata:/var/opt/mssql/data
+    networks:
+       - overlay
+volumes:
+  dbdata:
+  syncdata:
+
+configs:
+  ucedocket-config:
+    file: ./config/config.json
+
+networks:
+  overlay:

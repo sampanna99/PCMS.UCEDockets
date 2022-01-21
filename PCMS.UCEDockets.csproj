@@ -2,12 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
-  <!-- <ItemGroup>
-    <Content Include="config/config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup> -->
-
+  
   <Target Name="GenerateFromXSD" BeforeTargets="Build">
     <Exec Command="dotnet tool run xscgen UCE-UCMSCriminalDockets.xsd --compactTypeNames --netCore --uniqueTypeNames --pascal --nullable" WorkingDirectory="$(ProjectDir)/Xml.Ucms.Criminaldockets" />
   </Target>

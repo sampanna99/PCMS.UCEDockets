@@ -10,6 +10,7 @@ using System;
 using System.Reflection;
 using System.IO;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 public class Program
 {
@@ -50,6 +51,7 @@ public class Program
                 Description = "PCMS.UCEDockets cache server to integrate with the API described here: https://portal.nycourts.gov/UCE/"
             });
 
+            // ensure the original docs from the .xsds are forwarded into swagger spec
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });        
@@ -57,9 +59,16 @@ public class Program
         var app = builder.Build();
 
         var options = app.Services.GetRequiredService<IOptions<UCEDocketsOptions>>().Value;
+        var logger = app.Services.GetRequiredService<ILogger<Program>>();
 
-        app.UseSwagger();   // http://localhost:5023/swagger/v1/swagger.json
-        app.UseSwaggerUI(); // http://localhost:5023/swagger
+        logger.LogWarning(System.Text.Json.JsonSerializer.Serialize(options));
+
+        if (options.SwaggerEabled)
+        {
+            app.UseSwagger();       // http://localhost:5023/swagger/v1/swagger.json
+            if (options.SwaggerUIEnabled)
+                app.UseSwaggerUI(); // http://localhost:5023/swagger
+        }
 
         app.MapControllers();
 

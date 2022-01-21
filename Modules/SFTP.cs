@@ -35,7 +35,12 @@ public class SFTP
     
     public Task ExecuteSynchronizations(CancellationToken cancel)
     {
-        logger.LogInformation($"Starting synchronization of files over with {options.Value.Host}");
+        logger.LogInformation($"Starting synchronization of files over with {options.Value.Host} to {options.Value.LocalPath}");
+
+        logger.LogWarning($"local path \"{options.Value.LocalPath}\" does not exist, attempting to create it");
+        if(!Directory.Exists(options.Value.LocalPath))
+            Directory.CreateDirectory(options.Value.LocalPath);
+
         using var sftp = new Renci.SshNet.SftpClient(options.Value.Host, options.Value.Port, options.Value.UserName, options.Value.Password);
 
         sftp.Connect();
@@ -74,7 +79,7 @@ public class SFTP
                                         sftp.DownloadFile(zip.FullName, localFileStream);
 
                                     var fi = new FileInfo(localFilePath);
-                                    if (fi.Exists)
+                                    if (!fi.Exists)
                                         throw new Exception("file failed to download or has zero byte length");
 
                                     MetricNewFileSizeTotal.WithLabels(county).Inc(fi.Length);

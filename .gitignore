@@ -1,10 +1,6 @@
 # project specific
-
 data/
-config/
-
-
-
+config/config.json
 
 # User-specific files
 *.suo
@@ -307,6 +303,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-debug.config.json
-support/data/
 *.lock
