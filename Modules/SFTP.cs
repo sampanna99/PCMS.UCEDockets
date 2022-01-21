@@ -37,9 +37,11 @@ public class SFTP
     {
         logger.LogInformation($"Starting synchronization of files over with {options.Value.Host} to {options.Value.LocalPath}");
 
-        logger.LogWarning($"local path \"{options.Value.LocalPath}\" does not exist, attempting to create it");
         if(!Directory.Exists(options.Value.LocalPath))
+        {
+            logger.LogWarning($"local path \"{options.Value.LocalPath}\" does not exist, attempting to create it");
             Directory.CreateDirectory(options.Value.LocalPath);
+        }
 
         using var sftp = new Renci.SshNet.SftpClient(options.Value.Host, options.Value.Port, options.Value.UserName, options.Value.Password);
 

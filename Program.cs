@@ -11,6 +11,7 @@ using System.Reflection;
 using System.IO;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 
 public class Program
 {
@@ -23,6 +24,11 @@ public class Program
         builder.Configuration
             .AddJsonFile("config/config.json", optional: true)
             .AddEnvironmentVariables();
+
+        builder.Services.Configure<HostOptions>((hostOptions) =>
+        {
+            hostOptions.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.Ignore;
+        });
 
         builder.Services.AddOptions<UCEDocketsOptions>()
             .Bind(builder.Configuration.GetSection(UCEDocketsOptions.Section));
@@ -54,14 +60,14 @@ public class Program
             // ensure the original docs from the .xsds are forwarded into swagger spec
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-        });        
+        });
 
         var app = builder.Build();
 
         var options = app.Services.GetRequiredService<IOptions<UCEDocketsOptions>>().Value;
         var logger = app.Services.GetRequiredService<ILogger<Program>>();
 
-        logger.LogWarning(System.Text.Json.JsonSerializer.Serialize(options));
+
 
         if (options.SwaggerEnabled)
         {
