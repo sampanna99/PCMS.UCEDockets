@@ -7,7 +7,6 @@ services:
       # Configuration Precedence:
       #   UCEDocketsOptions.cs < appsettings.json < ./config/config.json < EnvVar
       
-      # there is a password here that should be changed, see duplicated information below SA_PASSWORD
       ConnectionStrings__DefaultConnection: Server=db; Database=ucedockets; User ID=sa; Password=ChangeMe!N0W;
     volumes:
        - syncdata:/sync
