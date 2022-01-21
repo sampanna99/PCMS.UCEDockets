@@ -25,6 +25,9 @@ public class Program
             .AddJsonFile("config/config.json", optional: true)
             .AddEnvironmentVariables();
 
+        var options = new UCEDocketsOptions();
+        builder.Configuration.Bind(UCEDocketsOptions.Section, options);
+
         builder.Services.Configure<HostOptions>((hostOptions) =>
         {
             hostOptions.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.Ignore;
@@ -42,9 +45,13 @@ public class Program
 
         builder.Services.AddTransient<Modules.SFTP>();
         builder.Services.AddTransient<Modules.Importer>();
-
-        builder.Services.AddDbContext<Entities.UCEDocketsContext>(opt =>
-            opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        
+        if (options.MSSQLEnabled)
+            builder.Services.AddDbContext<Entities.UCEDocketsContext>(opt =>
+                opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        else if (options.SQLiteEnabled)
+            builder.Services.AddDbContext<Entities.UCEDocketsContext>(opt =>
+                opt.UseSqlite($"Data Source={options.SQLitePath}"));
 
         builder.Services.AddLogging();
 
@@ -64,7 +71,6 @@ public class Program
 
         var app = builder.Build();
 
-        var options = app.Services.GetRequiredService<IOptions<UCEDocketsOptions>>().Value;
         var logger = app.Services.GetRequiredService<ILogger<Program>>();
 
 

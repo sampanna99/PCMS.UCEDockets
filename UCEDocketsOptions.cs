@@ -17,4 +17,8 @@ public class UCEDocketsOptions
 
     public bool PrometheusEnabled { get; set; } = false;
     public int MetricsPort { get; set; } = 5201;
+
+    public bool SQLiteEnabled { get; set; } = true;
+    public string SQLitePath { get; set; } = null;
+    public bool MSSQLEnabled { get; set; } = false;
 }
