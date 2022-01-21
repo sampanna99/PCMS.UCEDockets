@@ -18,6 +18,58 @@ Unsupported:
 
 * The server opens unauthenticated HTTP ports that must be 
   protected through standard server hosting solutions
+* The database is a single table. The XML is stored as XML in a column,
+  not expanded into a comparable schema
+
+Database
+--------
+The dockets will be maintained in a database through EntityFramework. Initial
+support is for MS SQL Server, however supporting other databases would be trivial.
+
+It's important to understand that it's the XML that is stored in this database. It
+does NOT expand the schema into comparable tables within the database.
+
+![Database Table showing columns stored](docs/table.png)
+
+The database has a single data table, that stores the XML keyed by the 
+UCMS Docket-ID.
+
+Prerequisites
+--------
+Install the following:
+    [.NET Core SDK](https://dotnet.microsoft.com/download) The SDK also includes the Runtime.
+
+Building
+--------
+
+Restore nuget packages and build tools
+```
+dotnet restore
+dotnet tool restore
+```
+
+Build
+```
+dotnet build
+```
+
+Configuration
+-------------
+```json
+{
+  "UCEDockets": {
+      "LocalPath": "data",
+      "Counties": ["Richmond", "Albany"],
+      "Host": "sftp.nycourts.gov",
+      
+      "Username": "UCE-********",
+      "Password": "**********"
+  },
+  "ConnectionStrings": {
+      "DefaultConnection": ""
+  }
+}
+```
 
 Libraries
 ---------
