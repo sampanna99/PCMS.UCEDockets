@@ -1,7 +1,8 @@
 PCMS.UCEDockets
 ===============
 
-A database cache and REST API that consumes the UCMS-UCE data feed
+A server that consumes the UCMS-UCE feed and presents an OpenAPI microservice based
+on the latest feed specifications.
 
 Features
 --------
@@ -20,6 +21,8 @@ Unsupported:
   protected through standard server hosting solutions
 * The database is a single table. The XML is stored as XML in a column,
   not expanded into a comparable schema
+* Change Tracking is at the DOCKET level only, no solutions here for calculating deltas
+  within a docket
 
 Overview
 --------

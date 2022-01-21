@@ -3,6 +3,7 @@ namespace PCMS.UCEDockets.Controllers;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PCMS.UCEDockets.Entities;
 
@@ -18,7 +19,9 @@ public class DocketsController : ControllerBase
     }
 
     [HttpGet("{docketID}", Name = "GetDocket")]
-    [ProducesResponseType(typeof(Xml.Ucms.Criminaldockets.CriminalDocketsDistrictCountyCourtDocket), 200)]    
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Xml.Ucms.Criminaldockets.CriminalDocketsDistrictCountyCourtDocket))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Get([Required]string docketID)
     {
         if (!Regex.IsMatch(docketID ?? string.Empty, @"Docket-\d*"))
