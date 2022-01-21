@@ -8,7 +8,7 @@ services:
       ConnectionStrings__DefaultConnection: Server=db; Database=ucedockets; User ID=sa; Password=ChangeMe!N0W;
       UCEDockets__LocalPath: /sync
     volumes:
-       - dbdata:/var/opt/mssql/data
+       - syncdata:/sync
     configs:
       - source: ucedocket-config
         target: /app/config/config.json
@@ -23,6 +23,7 @@ services:
        - overlay      
   db:
     image: "mcr.microsoft.com/mssql/server"
+    user: root
     environment:
       # there is a password here that should be changed, see duplicated information above ConnectionStrings__DefaultConnection
       SA_PASSWORD: "ChangeMe!N0W"
@@ -30,7 +31,7 @@ services:
     volumes:
       - dbdata:/var/opt/mssql/data
     networks:
-       - overlay
+      - overlay
 volumes:
   dbdata:
   syncdata:
