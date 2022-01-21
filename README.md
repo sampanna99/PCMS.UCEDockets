@@ -1,7 +1,7 @@
 PCMS.UCEDockets
 ===============
 
-A database cache and REST API that consumes the UMCS-UCE data feed
+A database cache and REST API that consumes the UCMS-UCE data feed
 
 Features
 --------
