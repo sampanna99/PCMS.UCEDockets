@@ -12,11 +12,9 @@ public class UCEDocketsOptions
     public string LocalPath { get; set; }
     public bool UseImportedMarkers { get; set; } = true;
 
-    public bool SwaggerEabled { get; set; } = true;
+    public bool SwaggerEnabled { get; set; } = true;
     public bool SwaggerUIEnabled { get; set; } = true;
 
-
-    // if nonzero, this will enable the prometheus
-    // monitoring endpoints to collect the counters
-    public int MetricsPort { get; set; } = 0;
+    public bool PrometheusEnabled { get; set; } = false;
+    public int MetricsPort { get; set; } = 5201;
 }

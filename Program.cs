@@ -63,7 +63,7 @@ public class Program
 
         logger.LogWarning(System.Text.Json.JsonSerializer.Serialize(options));
 
-        if (options.SwaggerEabled)
+        if (options.SwaggerEnabled)
         {
             app.UseSwagger();       // http://localhost:5023/swagger/v1/swagger.json
             if (options.SwaggerUIEnabled)
@@ -73,7 +73,6 @@ public class Program
         app.MapControllers();
 
         await app.RunAsync();
-
         return 0;
     }
 }

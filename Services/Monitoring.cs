@@ -21,7 +21,7 @@ public class Monitoring : BackgroundService
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        if (options.Value.MetricsPort > 0)
+        if (options.Value.PrometheusEnabled)
         {
             logging.LogInformation($"Starting prometheus metrics endpoint on port {options.Value.MetricsPort}");
             try
