@@ -2,7 +2,7 @@ PCMS.UCEDockets
 ===============
 
 A server that consumes the UCMS-UCE feed and presents an OpenAPI microservice based
-on the latest feed specifications.
+on the latest feed specifications found here: https://portal.nycourts.gov/UCE/
 
 Features
 --------
@@ -65,15 +65,9 @@ Configuration
 ```json
 {
   "UCEDockets": {
-      "LocalPath": "data",
-      "Counties": ["Richmond", "Albany"],
-      "Host": "sftp.nycourts.gov",
-      
+      "Counties": ["Richmond"],
       "Username": "UCE-********",
       "Password": "**********"
-  },
-  "ConnectionStrings": {
-      "DefaultConnection": ""
   }
 }
 ```
