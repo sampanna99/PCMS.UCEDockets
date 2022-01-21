@@ -21,6 +21,10 @@ Unsupported:
 * The database is a single table. The XML is stored as XML in a column,
   not expanded into a comparable schema
 
+Overview
+--------
+![Architecture diagram](docs/PCMS.UCEDockets.drawio.png)
+
 Database
 --------
 The dockets will be maintained in a database through EntityFramework. Initial
@@ -37,7 +41,7 @@ UCMS Docket-ID.
 Prerequisites
 --------
 Install the following:
-    [.NET Core SDK](https://dotnet.microsoft.com/download) The SDK also includes the Runtime.
+    [.NET Core SDK](https://dotnet.microsoft.com/download) version 6.x
 
 Building
 --------
