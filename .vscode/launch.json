@@ -9,25 +9,11 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net6.0/PCMS.UCEDockets.dll",
+            "program": "${workspaceFolder}/src/bin/Debug/net6.0/PCMS.UCEDockets.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/src",
             "console": "internalConsole",
             "stopAtEntry": false
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach"
-        },
-        {
-            "name": "Docker .NET Core Launch",
-            "type": "docker",
-            "request": "launch",
-            "preLaunchTask": "docker-run: debug",
-            "netCore": {
-                "appProject": "${workspaceFolder}/UCEDockets.csproj"
-            }
         }
     ]
 }
