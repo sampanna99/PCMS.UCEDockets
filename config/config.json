@@ -13,6 +13,7 @@
         "Sqlite": {
             "Path": "../../data/db/ucedockets.sqlite"
         },
+        
         "SqlServer": {
             "ConnectionString": "Server=(LocalDB)\\MSSQLLocalDB;Integrated Security=true; Database=UCEDockets"
         }
@@ -32,6 +33,5 @@
                 "UseUtcTimestamp": true
             }
         }
-    },
-    "AllowedHosts": "*"
+    }
 }

@@ -23,44 +23,47 @@ Unsupported:
 * Change Tracking is at the DOCKET level only, no solutions here for calculating deltas
   within a docket
 
-Quickstart
-----------
-
-
 Configuration
 -------------
-You must create a configuration file with your credentials and the names
-of the counties you are synchronizing
+There are two mandatory steps for configuration:
 
-Create a directory named config
-```bash
-
-# create config subdirectory
-mkdir config
-
-cd config
-```
-
-Create a file here named `config.json`
+1. Edit the file `config/config.json` to configure the counties that you want to download
+2. Create a new file `config/config.secrets.json` that contains your sftp credentials
 
 ```bash
 # if using vs code
-code config.json
+code config/config.json
+code config/config.secrets.json
+
 ```
 
 ```json
+// Example contents of config/config.secrets.json
 {
   "UCEDockets": {
-
-      "Counties": [
-        "CountyName1",
-        "CountyName2"
-      ],
+    "SFTP": {
       "Username": "**********",
       "Password": "**********"
+    }
   }
 }
 ```
+
+Start with Docker
+-----------------
+
+```bash
+cd docker-compose
+docker compose up -d
+```
+
+Start with .NET 6
+-----------------
+```bash
+cd src/PCMS.UCEDockets
+dotnet run
+```
+
 
 
 Overview
@@ -69,8 +72,7 @@ Overview
 
 Database
 --------
-The dockets will be maintained in a database through EntityFramework. Initial
-support is for MS SQL Server, however supporting other databases would be trivial.
+The dockets will be maintained in a database (SQLite by default, SqlServer optional).
 
 It's important to understand that it's the XML that is stored in this database. It
 does NOT expand the schema into comparable tables within the database.

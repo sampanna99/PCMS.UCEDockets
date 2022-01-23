@@ -18,9 +18,11 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        var configPath = Path.Combine(Directory.GetCurrentDirectory(), "../../config/");
+
         builder.Configuration
-            .AddJsonFile("config/config.json", optional: true)
-            .AddJsonFile("appsettings.secrets.json", optional: true)
+            .AddJsonFile(Path.Combine(configPath, "config.json"), optional: false)
+            .AddJsonFile(Path.Combine(configPath, "config.secrets.json"), optional: true)
             .AddEnvironmentVariables();
 
         var options = new UCEDocketsOptions();

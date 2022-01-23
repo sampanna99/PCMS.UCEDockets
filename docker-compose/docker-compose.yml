@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  ucedockets:
+    image: pcms.ucedockets
+
+    # SECURITY NOTE: running the container as root simplifies getting
+    # a demo up and running quickly, but is not a great idea
+    # in production. the container is configured to run
+    # as UID:5678 but needs read/write access to storage
+    # for syncronizing files and creating a database and
+    # running in lower privileges with more deliberate
+    # storage mappings is a better plan than the this demo
+    user: root
+    volumes:
+       - ../data/sync:/data/sync
+       - ../data/db:/data/db
+       - ../config/config.json:/app/config.json
+       - ../config/config.secrets.json:/app/config.secrets.json
+    build:
+      context: ..
+      dockerfile: ./src/PCMS.UCEDockets/Dockerfile
+    ports:
+      - 5023:5023
