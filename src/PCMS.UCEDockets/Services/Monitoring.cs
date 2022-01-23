@@ -21,12 +21,12 @@ public class Monitoring : BackgroundService
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        if (options.Value.PrometheusEnabled)
+        if (options.Value.Metrics.PrometheusEnabled)
         {
-            logging.LogInformation($"Starting prometheus metrics endpoint on port {options.Value.MetricsPort}");
+            logging.LogInformation($"Starting prometheus metrics endpoint on port {options.Value.Metrics.Port}");
             try
             {
-                var metricsServer = new KestrelMetricServer(port: options.Value.MetricsPort);
+                var metricsServer = new KestrelMetricServer(port: options.Value.Metrics.Port);
                 metricsServer.Start();
             }
             catch (Exception e)

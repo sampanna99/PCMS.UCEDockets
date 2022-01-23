@@ -4,13 +4,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Reflection;
 using System.IO;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 
 public class Program
@@ -22,7 +19,7 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Configuration
-            .AddJsonFile("config/config.json", optional: true)
+            .AddJsonFile("./config/config.json", optional: true)
             .AddEnvironmentVariables();
 
         var options = new UCEDocketsOptions();
@@ -46,13 +43,20 @@ public class Program
         builder.Services.AddTransient<Modules.SFTP>();
         builder.Services.AddTransient<Modules.Importer>();
         
-        if (options.MSSQLEnabled)
-            builder.Services.AddDbContext<Entities.UCEDocketsContext>(opt =>
-                opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-        else if (options.SQLiteEnabled)
-            builder.Services.AddDbContext<Entities.UCEDocketsContext>(opt =>
-                opt.UseSqlite($"Data Source={options.SQLitePath}"));
-
+        switch (options.EFDatabaseProvider?.ToLower())
+        {
+            case "sqlite": 
+                builder.Services.AddDbContext<Entities.UCEDocketsContext, Entities.SqliteUCEDocketsContext>();
+                break;
+            case "sqlserver": 
+                builder.Services.AddDbContext<Entities.UCEDocketsContext, Entities.SqlServerUCEDocketsContext>();
+                break;
+            case "none":
+                break;
+            default:
+                throw new Exception($"Unknown EFDatabaseProvider: {options.EFDatabaseProvider}");
+        }
+            
         builder.Services.AddLogging();
 
         builder.Services.AddSwaggerGen(options =>
@@ -71,14 +75,12 @@ public class Program
 
         var app = builder.Build();
 
-        var logger = app.Services.GetRequiredService<ILogger<Program>>();
+        //var logger = app.Services.GetRequiredService<ILogger<Program>>();
 
-
-
-        if (options.SwaggerEnabled)
+        if (options.Swagger.Enabled)
         {
             app.UseSwagger();       // http://localhost:5023/swagger/v1/swagger.json
-            if (options.SwaggerUIEnabled)
+            if (options.Swagger.UIEnabled)
                 app.UseSwaggerUI(); // http://localhost:5023/swagger
         }
 

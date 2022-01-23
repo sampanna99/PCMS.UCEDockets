@@ -3,13 +3,19 @@ WORKDIR /app
 EXPOSE 5023
 
 ENV ASPNETCORE_URLS=http://+:5023
-ENV UCEDockets__LocalPath=/sync
+ENV UCEDockets__LocalSyncPath=/data/sync
+ENV UCEDockets__Sqlite__Path=/data/db/ucedockets.sqlite
 
-RUN mkdir -p /sync
+RUN mkdir -p /data/sync
+RUN mkdir -p /data/db
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
-RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app && chown -R appuser /sync
+RUN adduser -u 5678 --disabled-password --gecos "" appuser && \
+    chown -R appuser /app && \
+    chown -R appuser /data/sync && \
+    chown -R appuser /data/db
+
 USER appuser
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
@@ -19,10 +25,10 @@ WORKDIR /src
 COPY [".config/dotnet-tools.json", ".config/dotnet-tools.json"]
 RUN dotnet tool restore
 
-COPY ["PCMS.UCEDockets.csproj", "./"]
-RUN dotnet restore "PCMS.UCEDockets.csproj"
-COPY . .
-WORKDIR "/src/."
+COPY ["./src/PCMS.UCEDockets/PCMS.UCEDockets.csproj", "./src/PCMS.UCEDockets/"]
+RUN dotnet restore "./src/PCMS.UCEDockets/PCMS.UCEDockets.csproj"
+COPY ["./src/PCMS.UCEDockets", "./src/PCMS.UCEDockets"]
+WORKDIR "/src/src/PCMS.UCEDockets/"
 RUN dotnet build "PCMS.UCEDockets.csproj" -c Release -o /app/build
 
 FROM build AS publish

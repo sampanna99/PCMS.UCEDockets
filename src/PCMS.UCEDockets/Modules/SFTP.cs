@@ -14,13 +14,13 @@ public class SFTP
     private readonly IOptions<UCEDocketsOptions> options;
     private readonly ILogger<SFTP> logger;
 
-    private static Counter MetricNewFilesTotal = 
+    private static Counter MetricNewFilesTotal =
         Metrics.CreateCounter("new_files_total", "Counts files downloaded from the sftp server",
             new CounterConfiguration
             {
                 LabelNames = new[] { "county" },
             });
-    private static Counter MetricNewFileSizeTotal = 
+    private static Counter MetricNewFileSizeTotal =
         Metrics.CreateCounter("new_files_bytes_total", "Count of bytes downloaded from the sftp server",
             new CounterConfiguration
             {
@@ -32,18 +32,18 @@ public class SFTP
         this.options = options;
         this.logger = logger;
     }
-    
+
     public Task ExecuteSynchronizations(CancellationToken cancel)
     {
-        logger.LogInformation($"Starting synchronization of files over with {options.Value.Host} to {options.Value.LocalPath}");
+        logger.LogInformation($"Starting synchronization of files over with {options.Value.SFTP.UserName}@{options.Value.SFTP.Host} to {options.Value.LocalSyncPath}");
 
-        if(!Directory.Exists(options.Value.LocalPath))
+        if (!Directory.Exists(options.Value.LocalSyncPath))
         {
-            logger.LogWarning($"local path \"{options.Value.LocalPath}\" does not exist, attempting to create it");
-            Directory.CreateDirectory(options.Value.LocalPath);
+            logger.LogWarning($"local path \"{options.Value.LocalSyncPath}\" does not exist, attempting to create it");
+            Directory.CreateDirectory(options.Value.LocalSyncPath);
         }
 
-        using var sftp = new Renci.SshNet.SftpClient(options.Value.Host, options.Value.Port, options.Value.UserName, options.Value.Password);
+        using var sftp = new Renci.SshNet.SftpClient(options.Value.SFTP.Host, options.Value.SFTP.Port, options.Value.SFTP.UserName, options.Value.SFTP.Password);
 
         sftp.Connect();
         logger.LogDebug($"connected");
@@ -59,11 +59,11 @@ public class SFTP
             {
                 if (cancel.IsCancellationRequested)
                     throw new TaskCanceledException();
-                    
+
                 if (entry.IsDirectory && entry.Name != "." && entry.Name != "..")
                 {
                     var relativePath = entry.FullName.StartsWith("/") ? entry.FullName.Substring(1) : entry.FullName;
-                    var localPath = Path.Combine(options.Value.LocalPath, relativePath);
+                    var localPath = Path.Combine(options.Value.LocalSyncPath, relativePath);
 
                     if (!Directory.Exists(localPath))
                     {

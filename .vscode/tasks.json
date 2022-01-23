@@ -13,7 +13,7 @@
                 "/consoleloggerparameters:NoSummary"
             ],
             "options": {
-                "cwd": "${workspaceFolder}/src",
+                "cwd": "${workspaceFolder}/src/PCMS.UCEDockets",
             },
             "group": "build",
             "presentation": {

@@ -2,19 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PCMS.UCEDockets.Entities;
 
 #nullable disable
 
-namespace PCMS.UCEDockets.Migrations
+namespace PCMS.UCEDockets.Migrations.SqliteMigrations
 {
-    [DbContext(typeof(UCEDocketsContext))]
-    [Migration("20220121212758_initial")]
-    partial class initial
+    [DbContext(typeof(SqliteUCEDocketsContext))]
+    partial class SqliteUCEDocketsContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.1");

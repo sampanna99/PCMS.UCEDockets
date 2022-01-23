@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/bin/Debug/net6.0/PCMS.UCEDockets.dll",
+            "program": "${workspaceFolder}/src/PCMS.UCEDockets/bin/Debug/net6.0/PCMS.UCEDockets.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopAtEntry": false
         }

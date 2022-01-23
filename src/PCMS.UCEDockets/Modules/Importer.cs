@@ -48,9 +48,9 @@ public class Importer
         using IServiceScope scope = this.serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<UCEDocketsContext>();
 
-        logger.LogInformation($"Starting Import at {options.Value.LocalPath}");
+        logger.LogInformation($"Starting Import at {options.Value.LocalSyncPath}");
         
-        var fileCount = ImportLocalPathRecursively(context, options.Value.LocalPath);
+        var fileCount = ImportLocalPathRecursively(context, options.Value.LocalSyncPath);
         logger.LogInformation($"Import Complete: {fileCount} new files");
 
         if (fileCount == 0)

@@ -3,43 +3,15 @@ version: '3.9'
 services:
   ucedockets:
     image: pcms.ucedockets
-    environment:
+    # environment:
       # Configuration Precedence:
       #   UCEDocketsOptions.cs < appsettings.json < ./config/config.json < EnvVar
-      
-      ConnectionStrings__DefaultConnection: Server=db; Database=ucedockets; User ID=sa; Password=ChangeMe!N0W;
     volumes:
-       - syncdata:/sync
-    configs:
-      - source: ucedocket-config
-        target: /app/config
+       - ./data/sync:/data/sync
+       - ./data/db:/data/db
+       - ./config:/app/config
     build:
-      context: src/
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./src/PCMS.UCEDockets/Dockerfile
     ports:
       - 5023:5023
-    depends_on:
-      - db
-    networks:
-      - overlay      
-  db:
-    image: "mcr.microsoft.com/mssql/server"
-    user: root
-    environment:
-      # there is a password here that should be changed, see duplicated information above ConnectionStrings__DefaultConnection
-      SA_PASSWORD: "ChangeMe!N0W"
-      ACCEPT_EULA: "Y"
-    volumes:
-      - dbdata:/var/opt/mssql/data
-    networks:
-      - overlay
-volumes:
-  dbdata:
-  syncdata:
-
-configs:
-  ucedocket-config:
-    file: ./config/
-
-networks:
-  overlay:
