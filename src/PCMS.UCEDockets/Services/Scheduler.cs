@@ -31,6 +31,8 @@ public class Scheduler : BackgroundService
     
     protected override async Task ExecuteAsync(CancellationToken cancel)
     {
+        await Task.Yield();
+        
         using(IServiceScope scope = this.serviceProvider.CreateScope())
         {
             var context = scope.ServiceProvider.GetRequiredService<UCEDocketsContext>();

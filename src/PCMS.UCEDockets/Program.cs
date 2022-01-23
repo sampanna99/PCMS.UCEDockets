@@ -18,8 +18,16 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        var configPath = Path.Combine(Directory.GetCurrentDirectory(), "../../config/");
+        var configPath = System.Environment.GetEnvironmentVariable("PCMS_UCEDOCKETS_CONFIG_PATH");
 
+        if (configPath == null && File.Exists("./config.json"))
+            configPath = Directory.GetCurrentDirectory();
+
+        if (configPath == null && File.Exists("../../config/config.json"))
+            configPath = Path.Combine(Directory.GetCurrentDirectory(), "../../config/");
+        
+        configPath ??= ".";
+        
         builder.Configuration
             .AddJsonFile(Path.Combine(configPath, "config.json"), optional: false)
             .AddJsonFile(Path.Combine(configPath, "config.secrets.json"), optional: true)

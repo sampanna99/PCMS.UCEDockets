@@ -19,8 +19,10 @@ public class Monitoring : BackgroundService
         this.logging = logging;
     }
 
-    protected override Task ExecuteAsync(CancellationToken stoppingToken)
+    protected async override Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        await Task.Yield();
+
         if (options.Value.Metrics.PrometheusEnabled)
         {
             logging.LogInformation($"Starting prometheus metrics endpoint on port {options.Value.Metrics.Port}");
@@ -34,7 +36,5 @@ public class Monitoring : BackgroundService
                 logging.LogError($"Failed: {e}");
             }
         }
-
-        return Task.CompletedTask;
     }
 }

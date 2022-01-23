@@ -53,6 +53,19 @@ Start with Docker
 -----------------
 
 ```bash
+docker run -it -d \
+  -v $PWD/data:/data \
+  -v $PWD/config/config.json:/app/config.json \
+  -v $PWD/config/config.secrets.json:/app/config.secrets.json \
+  -p 5023 \
+  -u root \
+  pcms.ucedockets
+```
+
+Start with Docker-Compose
+-------------------------
+
+```bash
 cd docker-compose
 docker compose up -d
 ```

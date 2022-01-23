@@ -6,12 +6,13 @@ ENV ASPNETCORE_URLS=http://+:5023
 ENV UCEDockets__LocalSyncPath=/data/sync
 ENV UCEDockets__Sqlite__Path=/data/db/ucedockets.sqlite
 
+RUN mkdir -p /app
 RUN mkdir -p /data/sync
 RUN mkdir -p /data/db
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
-RUN adduser -u 5678 --disabled-password --gecos "" appuser && \
+RUN adduser -u 1000 --disabled-password --gecos "" appuser && \
     chown -R appuser /app && \
     chown -R appuser /data/sync && \
     chown -R appuser /data/db
@@ -36,7 +37,6 @@ RUN dotnet publish "PCMS.UCEDockets.csproj" -c Release -o /app/publish /p:UseApp
 
 FROM base AS final
 WORKDIR /app
-RUN mkdir -p /app/config
 
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "PCMS.UCEDockets.dll"]

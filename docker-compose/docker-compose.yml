@@ -7,11 +7,12 @@ services:
     # SECURITY NOTE: running the container as root simplifies getting
     # a demo up and running quickly, but is not a great idea
     # in production. the container is configured to run
-    # as UID:5678 but needs read/write access to storage
+    # as UID:1000 but needs read/write access to storage
     # for syncronizing files and creating a database and
     # running in lower privileges with more deliberate
     # storage mappings is a better plan than the this demo
     user: root
+
     volumes:
        - ../data/sync:/data/sync
        - ../data/db:/data/db
