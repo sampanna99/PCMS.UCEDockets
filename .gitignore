@@ -1,6 +1,8 @@
 # project specific
 data/
 config/config.json
+appsettings.secrets.json
+
 
 # User-specific files
 *.suo
