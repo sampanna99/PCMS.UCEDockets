@@ -14,12 +14,12 @@ services:
     user: root
 
     volumes:
-       - ../data/sync:/data/sync
-       - ../data/db:/data/db
-       - ../config/config.json:/app/config.json
-       - ../config/config.secrets.json:/app/config.secrets.json
+       - ./data/sync:/data/sync
+       - ./data/db:/data/db
+       - ./config/config.json:/app/config.json
+       - ./config/config.secrets.json:/app/config.secrets.json
     build:
-      context: ..
-      dockerfile: ./src/PCMS.UCEDockets/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 5023:5023

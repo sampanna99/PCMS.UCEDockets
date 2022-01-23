@@ -53,11 +53,15 @@ Start with Docker
 -----------------
 
 ```bash
+# build them image
+docker build . -t pcms.ucedockets
+
+# run the image
 docker run -it -d \
   -v $PWD/data:/data \
   -v $PWD/config/config.json:/app/config.json \
   -v $PWD/config/config.secrets.json:/app/config.secrets.json \
-  -p 5023 \
+  -p 5023:5023 \
   -u root \
   pcms.ucedockets
 ```
@@ -66,7 +70,6 @@ Start with Docker-Compose
 -------------------------
 
 ```bash
-cd docker-compose
 docker compose up -d
 ```
 
@@ -76,6 +79,13 @@ Start with .NET 6
 cd src/PCMS.UCEDockets
 dotnet run
 ```
+
+
+Browse the API interface
+------------------------
+
+[http://localhost:5023/swagger](http://localhost:5023/swagger)
+![Swagger UI](docs/swaggerui.png)
 
 
 
@@ -103,14 +113,16 @@ Install the following:
 Building
 --------
 
-Restore nuget packages and build tools
-```
+```bash
+# change into the directory where the c# source code is
+cd src/PCMS.UCEDocuments
+
+# Restore nuget packages and build tools
+
 dotnet restore
 dotnet tool restore
-```
 
-Build
-```
+# build
 dotnet build
 ```
 
