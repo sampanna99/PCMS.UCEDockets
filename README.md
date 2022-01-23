@@ -1,8 +1,7 @@
 PCMS.UCEDockets
 ===============
 
-A server that consumes the UCMS-UCE feed and presents an OpenAPI microservice based
-on the latest feed specifications found here: https://portal.nycourts.gov/UCE/
+An [open-source](https://github.com/NYPTI/PCMS.UCEDockets) server that reads [UCMS-UCE](https://portal.nycourts.gov/UCE/) feed and creates and easy to use REST API to connect your custom applications to the latest [feed specifications](https://portal.nycourts.gov/UCE/).
 
 Features
 --------
@@ -24,6 +23,46 @@ Unsupported:
 * Change Tracking is at the DOCKET level only, no solutions here for calculating deltas
   within a docket
 
+Quickstart
+----------
+
+
+Configuration
+-------------
+You must create a configuration file with your credentials and the names
+of the counties you are synchronizing
+
+Create a directory named config
+```bash
+
+# create config subdirectory
+mkdir config
+
+cd config
+```
+
+Create a file here named `config.json`
+
+```bash
+# if using vs code
+code config.json
+```
+
+```json
+{
+  "UCEDockets": {
+
+      "Counties": [
+        "CountyName1",
+        "CountyName2"
+      ],
+      "Username": "**********",
+      "Password": "**********"
+  }
+}
+```
+
+
 Overview
 --------
 ![Architecture diagram](docs/PCMS.UCEDockets.drawio.png)
@@ -44,7 +83,7 @@ UCMS Docket-ID.
 Prerequisites
 --------
 Install the following:
-    [.NET Core SDK](https://dotnet.microsoft.com/download) version 6.x
+- [.NET Core SDK](https://dotnet.microsoft.com/download) version 6.x
 
 Building
 --------
@@ -60,17 +99,6 @@ Build
 dotnet build
 ```
 
-Configuration
--------------
-```json
-{
-  "UCEDockets": {
-      "Counties": ["Richmond"],
-      "Username": "UCE-********",
-      "Password": "**********"
-  }
-}
-```
 
 Libraries
 ---------
@@ -82,3 +110,9 @@ In addition to many libraries from Microsoft, these libraries are in use:
 - *XmlSchemaClassGenerator* - Generate C# classes from XML Schema files - [github](XmlSchemaClassGenerator) / [nuget](https://www.nuget.org/packages/dotnet-xscgen/)
 
 
+Glossary
+---------------------
+UCMS - Universal Case Management System - case management system used by criminal court staff
+UCE - UCMS Criminal Extract - the name for the feed documented here: https://portal.nycourts.gov/UCE/
+DSH - Data Standards History *deprecated precursor to UCE*)
+PCMS - Prosecutors Case Management System (NYPTI, not nycourts.gov)
