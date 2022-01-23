@@ -19,7 +19,8 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Configuration
-            .AddJsonFile("./config/config.json", optional: true)
+            .AddJsonFile("config/config.json", optional: true)
+            .AddJsonFile("appsettings.secrets.json", optional: true)
             .AddEnvironmentVariables();
 
         var options = new UCEDocketsOptions();

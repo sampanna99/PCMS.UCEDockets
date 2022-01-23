@@ -1,5 +1,5 @@
 # project specific
-data/
+# data/
 config/config.json
 appsettings.secrets.json
 

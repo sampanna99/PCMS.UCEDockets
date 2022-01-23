@@ -11,7 +11,7 @@
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/PCMS.UCEDockets/bin/Debug/net6.0/PCMS.UCEDockets.dll",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/src/PCMS.UCEDockets",
             "console": "internalConsole",
             "stopAtEntry": false
         }
