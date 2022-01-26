@@ -1,9 +1,25 @@
 {
     "UCEDockets": {
+
+        // path to directory to sync SFTP files to
+        // internally the structure will be maintained
+        // beginning with /UCE/
+
+        // the structure will contain .zip files containing
+        // XML. The set of files at this path will 
+        // continue to grow over-time.
+
+        // TBD: maintenance/cleanup routines
+        // TBD: this path may go away entirely if we import straight to db.
         "LocalSyncPath": "../../data/sync",
-        "Counties": [
-            "Richmond"
-        ],
+
+
+        // Specify here the names of the counties to download
+        //   examples:
+        //      "Counties": [ "Richmond" ],
+        //      "Counties": [ "Richmond", "Albany" ],
+
+        "Counties": [ "Richmond" ],
 
         "SFTP": {
             "Host": "sftp.nycourts.gov"
