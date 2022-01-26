@@ -22,6 +22,12 @@ Unsupported:
   not expanded into a comparable schema
 * Change Tracking is at the DOCKET level only, no solutions here for calculating deltas
   within a docket
+  
+Get Involved - Collaborate - Use it!
+------------------------------------
+A chat room for interested parties can be found here:
+https://gitter.im/PCMS-UCEDockets/NYPTI-PCMS-UCEDockets
+
 
 Configuration
 -------------
