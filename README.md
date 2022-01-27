@@ -22,6 +22,11 @@ Unsupported:
   not expanded into a comparable schema
 * Change Tracking is at the DOCKET level only, no solutions here for calculating deltas
   within a docket
+  
+Get Involved - Collaborate - Use it!
+------------------------------------
+Say hello and join the conversation here: https://github.com/NYPTI/PCMS.UCEDockets/discussions
+
 
 Configuration
 -------------
@@ -131,15 +136,8 @@ Libraries
 ---------
 
 In addition to many libraries from Microsoft, these libraries are in use:
-- *SSH.NET* - SSH.NET is a Secure Shell (SSH) library for .NET - [github](https://github.com/sshnet/SSH.NET) / [nuget](https://www.nuget.org/packages/SSH.NET/)
-- *prometheus-net* - .NET library to instrument your code with Prometheus metrics - [github](https://github.com/prometheus-net/prometheus-net) / [nuget](https://www.nuget.org/packages/prometheus-net/)
-- *Swashbuckle.AspNetCore* - Swagger tools for documenting API's built on ASP.NET Core - [github](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) / [nuget](https://www.nuget.org/packages/Swashbuckle.AspNetCore/)
-- *XmlSchemaClassGenerator* - Generate C# classes from XML Schema files - [github](XmlSchemaClassGenerator) / [nuget](https://www.nuget.org/packages/dotnet-xscgen/)
+- *SSH.NET* - SSH.NET is a Secure Shell (SSH) library for .NET - [github](https://github.com/sshnet/SSH.NET) / [nuget](https://www.nuget.org/packages/SSH.NET/) MIT license
+- *prometheus-net* - .NET library to instrument your code with Prometheus metrics - [github](https://github.com/prometheus-net/prometheus-net) / [nuget](https://www.nuget.org/packages/prometheus-net/) MIT license
+- *Swashbuckle.AspNetCore* - Swagger tools for documenting API's built on ASP.NET Core - [github](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) / [nuget](https://www.nuget.org/packages/Swashbuckle.AspNetCore/) MIT license
+- *XmlSchemaClassGenerator* - Generate C# classes from XML Schema files - [github](https://github.com/mganss/XmlSchemaClassGenerator) / [nuget](https://www.nuget.org/packages/dotnet-xscgen/) Apache2 License
 
-
-Glossary
----------------------
-UCMS - Universal Case Management System - case management system used by criminal court staff
-UCE - UCMS Criminal Extract - the name for the feed documented here: https://portal.nycourts.gov/UCE/
-DSH - Data Standards History *deprecated precursor to UCE*)
-PCMS - Prosecutors Case Management System (NYPTI, not nycourts.gov)
