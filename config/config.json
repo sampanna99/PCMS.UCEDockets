@@ -13,27 +13,51 @@
         // TBD: this path may go away entirely if we import straight to db.
         "LocalSyncPath": "../../data/sync",
 
-
         // Specify here the names of the counties to download
         //   examples:
         //      "Counties": [ "Richmond" ],
         //      "Counties": [ "Richmond", "Albany" ],
 
         "Counties": [ "Richmond" ],
-
+        
         "SFTP": {
             "Host": "sftp.nycourts.gov"
+
+            // the secrets are split in the source tree to prevent accidental leaks
+            // feel free to combine the config in production, etc.
+
+            // if you accidentally commit a file with your credentials to any source control,
+            // contact OCA to change them asap
+
+            // "Username": "",
+            // "Password": ""
+
         },
 
+
+        // which database provider are we using
+        // the corresponding configuration section below will be related to this choice
+        // current options:
+        //   sqlite, sqlserver
         "EFDatabaseProvider": "sqlite",
+       
+        // sqlite configuration - Sqlite
+        // used if EFDatabaseProvider="sqlite"
         "Sqlite": {
             "Path": "../../data/db/ucedockets.sqlite"
         },
         
+        // SqlServer configuration - Microsoft Sql Server
+        // used if EFDatabaseProvider="sqlite"
         "SqlServer": {
+            // this default value might work automatically on dev machines, but will need to be
+            // adjusted for any production environment
+
             "ConnectionString": "Server=(LocalDB)\\MSSQLLocalDB;Integrated Security=true; Database=UCEDockets"
         }
     },
+
+    // https://docs.microsoft.com/en-us/dotnet/core/extensions/logging
     "Logging": {
         "Console": {
             "LogLevel": {
