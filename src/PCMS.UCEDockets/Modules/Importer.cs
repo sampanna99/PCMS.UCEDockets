@@ -93,11 +93,18 @@ public class Importer
 
     private void ParseFile(UCEDocketsContext context, Stream fileStream, string fileName)
     {
-        var dockets = Common.UCEDocketsSerializer.Parse(fileStream);
+        Xml.Ucms.Criminaldockets.CriminalDockets dockets;
 
-        if (dockets == null)
+        try
         {
-            logger.LogError($"{fileName} Failed to parse");
+            dockets = Common.UCEDocketsSerializer.Parse(fileStream);
+        }
+        catch (Exception e)
+        {
+            if (new FileInfo(fileName).Length == 0)
+                logger.LogWarning($"{fileName} is zero length");
+                
+            logger.LogError(e, $"{fileName} Failed to parse");
             return;
         }
 
@@ -129,7 +136,6 @@ public class Importer
                                 docketEntity.XMLDocket = xml;
 
                                 // QUESTION: any chance any of these other fields change without a new DocketID?
-
                                 logger.LogDebug($"{fileName} UPDATE {district.Name} {county.Name} {docketEntity.DocketID}");
                             }
                             else
@@ -156,6 +162,7 @@ public class Importer
                         foreach (var deleted in court.DeletedDocket)
                         {
                             // QUESTION: is this complying properly? do we need to worry about the zip files?
+                            // answer: zips need to be destroyed too
                             var original = context.Dockets.FirstOrDefault(d => d.DocketID == deleted.DeletedDocketID);
                             if (original != null)
                                 context.Dockets.Remove(original);

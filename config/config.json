@@ -21,7 +21,10 @@
         "Counties": [ "Richmond" ],
         
         "SFTP": {
-            "Host": "sftp.nycourts.gov"
+            "Host": "sftp.nycourts.gov",
+
+            // tcp port to connect via sftp (default: 22)
+            "Port": 22
 
             // the secrets are split in the source tree to prevent accidental leaks
             // feel free to combine the config in production, etc.
@@ -32,8 +35,8 @@
             // "Username": "",
             // "Password": ""
 
+            
         },
-
 
         // which database provider are we using
         // the corresponding configuration section below will be related to this choice
@@ -54,6 +57,15 @@
             // adjusted for any production environment
 
             "ConnectionString": "Server=(LocalDB)\\MSSQLLocalDB;Integrated Security=true; Database=UCEDockets"
+        },
+
+        "Metrics": {
+            // enable/disable publishing prometheus metrics: https://prometheus.io/
+            // default false. Disabled. great tool, check it out, but not for everyone.
+            "PrometheusEnabled": false, 
+
+            // which port should the prometheus metrics be published on
+            "Port": 5201
         }
     },
 
@@ -62,6 +74,7 @@
         "Console": {
             "LogLevel": {
                 "Default": "Information",
+                "PCMS.UCEDockets": "Debug",  // this is our project, maybe turn this one up a bit higher
                 "Microsoft": "Warning",
                 "Microsoft.Hosting.Lifetime": "Information"
             },

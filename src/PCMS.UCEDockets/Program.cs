@@ -15,17 +15,24 @@ public class Program
     static async Task<int> Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        // search for our configuration
+
+        // first check environment for a path to config
         var configPath = System.Environment.GetEnvironmentVariable("PCMS_UCEDOCKETS_CONFIG_PATH");
 
+        // next look for config.json in current directory
         if (configPath == null && File.Exists("./config.json"))
             configPath = Directory.GetCurrentDirectory();
 
+        // next look for config.json relative to current directory (this is for debugging within source tree)
         if (configPath == null && File.Exists("../../config/config.json"))
             configPath = Path.Combine(Directory.GetCurrentDirectory(), "../../config/");
         
+        // otherwise.. AddJsonFile will throw detailed exception
         configPath ??= ".";
         
         builder.Configuration
@@ -85,8 +92,6 @@ public class Program
         });
 
         var app = builder.Build();
-
-        //var logger = app.Services.GetRequiredService<ILogger<Program>>();
 
         if (options.Swagger.Enabled)
         {
