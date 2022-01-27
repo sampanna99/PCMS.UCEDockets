@@ -42,7 +42,7 @@ code config/config.secrets.json
 
 ```
 
-```json
+```jsonc
 // Example contents of config/config.secrets.json
 {
   "UCEDockets": {
