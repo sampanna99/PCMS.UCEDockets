@@ -25,8 +25,7 @@ Unsupported:
   
 Get Involved - Collaborate - Use it!
 ------------------------------------
-A chat room for interested parties can be found here:
-https://gitter.im/PCMS-UCEDockets/NYPTI-PCMS-UCEDockets
+Say hello and join the conversation here: https://github.com/NYPTI/PCMS.UCEDockets/discussions
 
 
 Configuration
