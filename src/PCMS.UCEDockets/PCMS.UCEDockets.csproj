@@ -4,6 +4,7 @@
     <UserSecretsId>9ff7ce91-28c5-453d-9041-637f2feb5faa</UserSecretsId>
   </PropertyGroup>
   
+  <!-- having problems with this build step? install the dotnet tool xscgen -->
   <Target Name="GenerateFromXSD" BeforeTargets="Build">
     <Exec Command="dotnet tool run xscgen UCE-UCMSCriminalDockets.xsd --compactTypeNames --netCore --uniqueTypeNames --pascal --nullable" WorkingDirectory="$(ProjectDir)/Xml.Ucms.Criminaldockets" />
   </Target>
